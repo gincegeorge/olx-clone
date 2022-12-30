@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useState } from "react";
 
-import Logo from '../../olx-logo.png';
-import './Signup.css';
+import Logo from "../../olx-logo.png";
+import "./Signup.css";
 
 export default function Signup() {
+  const [username, setUsername] = useState("");
+  const [email, setemail] = useState("");
+  const [phone, setphone] = useState("");
+  const [password, setpassword] = useState("");
+
   return (
     <div>
       <div className="signupParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
+        <img width="200px" height="200px" src={Logo} alt="logo-img"></img>
         <form>
           <label htmlFor="fname">Username</label>
           <br />
@@ -16,37 +21,49 @@ export default function Signup() {
             type="text"
             id="fname"
             name="name"
-            defaultValue="John"
+            value={username}
+            onChange={(e) => {
+              setUsername(e.target.value);
+            }}
           />
           <br />
-          <label htmlFor="fname">Email</label>
+          <label htmlFor="email">Email</label>
           <br />
           <input
             className="input"
             type="email"
-            id="fname"
+            id="email"
             name="email"
-            defaultValue="John"
+            value={email}
+            onChange={(e) => {
+              setemail(e.target.value);
+            }}
           />
           <br />
-          <label htmlFor="lname">Phone</label>
+          <label htmlFor="phone">Phone</label>
           <br />
           <input
             className="input"
             type="number"
-            id="lname"
+            id="phone"
             name="phone"
-            defaultValue="Doe"
+            value={phone}
+            onChange={(e) => {
+              setphone(e.target.value);
+            }}
           />
           <br />
-          <label htmlFor="lname">Password</label>
+          <label htmlFor="password">Password</label>
           <br />
           <input
             className="input"
             type="password"
-            id="lname"
+            id="password"
             name="password"
-            defaultValue="Doe"
+            value={password}
+            onChange={(e) => {
+              setpassword(e.target.value);
+            }}
           />
           <br />
           <br />
