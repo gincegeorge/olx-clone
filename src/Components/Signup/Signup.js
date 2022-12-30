@@ -1,19 +1,47 @@
-import React, { useState } from "react";
-
+import React, { useState, useContext } from "react";
+import { FirebaseContext } from "../../store/FirebaseContext";
 import Logo from "../../olx-logo.png";
 import "./Signup.css";
+import { useHistory } from "react-router-dom";
 
 export default function Signup() {
+  const history = useHistory();
   const [username, setUsername] = useState("");
   const [email, setemail] = useState("");
   const [phone, setphone] = useState("");
   const [password, setpassword] = useState("");
 
+  const { firebase } = useContext(FirebaseContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(firebase);
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        result.user.updateProfile({ displayName: username }).then(() => {
+          console.log(result.user.uid,username,phone,'-----------------------------');
+          firebase
+            .firestore()
+            .collection("users")
+            .add({
+              id:result.user.uid,
+              username: username,
+              phone: phone,
+            })
+            .then(() => {
+              history.push("/login");
+            });
+        });
+      });
+  };
+
   return (
     <div>
       <div className="signupParentDiv">
         <img width="200px" height="200px" src={Logo} alt="logo-img"></img>
-        <form>
+        <form onSubmit={handleSubmit}>
           <label htmlFor="fname">Username</label>
           <br />
           <input
@@ -69,7 +97,7 @@ export default function Signup() {
           <br />
           <button>Signup</button>
         </form>
-        <a>Login</a>
+        <a> Login</a>
       </div>
     </div>
   );
