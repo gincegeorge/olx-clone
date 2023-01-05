@@ -14,6 +14,10 @@ const Create = () => {
   const date = new Date();
   const handleSubmit = (e) => {
     e.preventDefault();
+
+  
+
+
     firebase
       .storage()
       .ref(`/image/${image.name}`)
